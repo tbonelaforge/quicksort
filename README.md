@@ -1,2 +1,4 @@
 Implementing quicksort.
-Still needs to use "three colors" sorting to avoid sorting values equal to the pivot.
+Uses "object oriented" approach, based around the 'sortable' structure.
+Uses "fat partitioning" aka three-color algorithm to avoid worst-case running times.
+Also contains an implementation of binary search to use on the resulting list.
