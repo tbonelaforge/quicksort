@@ -33,7 +33,6 @@ void print_integer(struct integer * this_integer) {
     printf("%d ", this_integer->value);
 }
 
-//void print_integers(struct integer ** integers, int n) {
 void print_as_integers(void ** structures, int n) {
     struct integer ** integers;
     int i;
@@ -88,37 +87,30 @@ int main() {
 
     printf("About to search for the number 6...\n");
     search_result = search_for_int(&test, 6);
-    //    search_result = binary_search(test, 0, 5, 6);
     printf("The search_result is: %d\n", search_result);
 
     printf("About to search for the number 4...\n");
-    //    search_result = binary_search(test, 0, 5, 4);
     search_result = search_for_int(&test, 4);
     printf("The search_result is: %d\n", search_result);
 
     printf("About to search for the number 2...\n");
-    //    search_result = binary_search(test, 0, 5, 2);
     search_result = search_for_int(&test, 2);
     printf("The search_result is: %d\n", search_result);
 
 
     printf("About to search for the number 7...\n");
-    //    search_result = binary_search(test, 0, 5, 7);
     search_result = search_for_int(&test, 7);
     printf("The search_result is: %d\n", search_result);
 
     printf("About to search for the number 5...\n");
-    //    search_result = binary_search(test, 0, 5, 5);
     search_result = search_for_int(&test, 5);
     printf("The search_result is: %d\n", search_result);
 
     printf("About to search for the number 3...\n");
-    //    search_result = binary_search(test, 0, 5, 3);
     search_result = search_for_int(&test, 3);
     printf("The search_result is: %d\n", search_result);
 
     printf("About to search for the number 1...\n");
-    //    search_result = binary_search(test, 0, 5, 1);
     search_result = search_for_int(&test, 1);
     printf("The search_result is: %d\n", search_result);
 }
