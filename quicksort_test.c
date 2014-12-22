@@ -2,52 +2,123 @@
 #include <stdlib.h>
 
 #include "quicksort.h"
+#include "binary_search.h"
 
-/*
-void print_array(int * a, int n) {
-    for (int i = 0; i < n; i++) {
-        printf("%d ", a[i]);
-    }
-    printf("\n");
+struct integer {
+    int value;
+};
+
+int search_for_int(struct sortable * self, int t) {
+    int begin = 0;
+    int end = self->how_many_elements - 1;
+    struct integer target = { t };
+
+    return binary_search(self, begin, end, &target);
 }
-*/
+
+int compare_integers(void * a, void * b) {
+    struct integer * a_integer = a;
+    struct integer * b_integer = b;
+
+    if (a_integer->value < b_integer->value) {
+        return -1;
+    } else if (a_integer->value > b_integer->value) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+void print_integer(struct integer * this_integer) {
+    printf("%d ", this_integer->value);
+}
+
+//void print_integers(struct integer ** integers, int n) {
+void print_as_integers(void ** structures, int n) {
+    struct integer ** integers;
+    int i;
+
+    integers = (struct integer **) structures;
+    for (i = 0; i < n; i++) {
+        print_integer(integers[i]);
+        printf("\n");
+    }
+}
+
+struct integer ** make_integer_structures(int * a, int n) {
+    int i;
+    struct integer ** integer_structures = malloc(n * sizeof(struct integer *));
+    struct integer * new_integer = NULL;
+
+    if (!integer_structures) {
+        return NULL;
+    }
+    for (i = 0; i < n; i++) {
+        new_integer = malloc(sizeof(struct integer));
+        if (!new_integer) {
+            return NULL;
+        }
+        new_integer->value = a[i];
+        integer_structures[i] = new_integer;
+    }
+    return integer_structures;
+}
 
 int main() {
     int i;
-    printf("About to sort the array: 2,1,1,2,3,1\n");
+    printf("About to sort the array: 4, 2, 2, 4, 6, 2\n");
 
-    int test[] = {
-        2,
-        1,
-        1,
-        2,
-        3,
-        1
-    };
+    int a[] = { 4, 2, 2, 4, 6, 2 };
     int n = 6;
-    quicksort(test, 6);
-    printf("The sorted array is:\n");
-    for (i = 0; i < n; i++) {
-        printf("%d\n", test[i]);
-    }
+    struct integer ** test_integers = make_integer_structures(a, n);
+    struct sortable test = {
+        (void **) test_integers,
+        n,
+        &compare_integers
+    };
 
-    printf("Constructing a 100,000 element list\n");
-    int * big_test = malloc(100003 * sizeof(int));
-    for (i = 0; i < 100003; i++) {
-        big_test[i] = -1;
-    }
-    //    big_test[100000] = 5;
-    big_test[0] = 5;
-    //    big_test[100001] = 3;
-    big_test[1] = 3;
-    //    big_test[100002] = 3;
-    big_test[2] = 3;
-    //    printf("Before sorting, the list looks like:\n");
-    printf("About to sort the big_test arrayz.\n");
-    //    print_array(big_test, 100003);
-    printf("Sorting the big list...\n");
-    quicksort(big_test, 100003);
-    //    printf("After sorting the big list, it looks like:\n");
-    printf("Done sorting the big_test: min = %d, max = %d\n", big_test[0], big_test[100002]);
-    //    print_array(big_test, 100003);
+    printf("About to sort test_integers:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    printf("About to call the quicksort function\n");
+    quicksort(&test);
+    printf("After sorting the integers, they look like:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+
+    int search_result;
+
+    printf("About to search for the number 6...\n");
+    search_result = search_for_int(&test, 6);
+    //    search_result = binary_search(test, 0, 5, 6);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 4...\n");
+    //    search_result = binary_search(test, 0, 5, 4);
+    search_result = search_for_int(&test, 4);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 2...\n");
+    //    search_result = binary_search(test, 0, 5, 2);
+    search_result = search_for_int(&test, 2);
+    printf("The search_result is: %d\n", search_result);
+
+
+    printf("About to search for the number 7...\n");
+    //    search_result = binary_search(test, 0, 5, 7);
+    search_result = search_for_int(&test, 7);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 5...\n");
+    //    search_result = binary_search(test, 0, 5, 5);
+    search_result = search_for_int(&test, 5);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 3...\n");
+    //    search_result = binary_search(test, 0, 5, 3);
+    search_result = search_for_int(&test, 3);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 1...\n");
+    //    search_result = binary_search(test, 0, 5, 1);
+    search_result = search_for_int(&test, 1);
+    printf("The search_result is: %d\n", search_result);
 }
