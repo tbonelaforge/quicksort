@@ -30,7 +30,6 @@ int determine_final_index(struct sortable * self, int begin, int end, void * tar
     if (compare_to_end >= 0) {
         return end;
     }
-    //    return begin;
     if (compare_to_begin >= 0) {
         return begin;
     }
