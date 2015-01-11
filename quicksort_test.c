@@ -63,10 +63,9 @@ struct integer ** make_integer_structures(int * a, int n) {
     return integer_structures;
 }
 
-int main() {
-    int i;
+void test_obvious() {
     printf("About to sort the array: 4, 2, 2, 4, 6, 2\n");
-
+    
     int a[] = { 4, 2, 2, 4, 6, 2 };
     int n = 6;
     struct integer ** test_integers = make_integer_structures(a, n);
@@ -75,42 +74,108 @@ int main() {
         n,
         &compare_integers
     };
-
+    
     printf("About to sort test_integers:\n");
     print_as_integers(test.elements, test.how_many_elements);
     printf("About to call the quicksort function\n");
     quicksort(&test);
     printf("After sorting the integers, they look like:\n");
     print_as_integers(test.elements, test.how_many_elements);
-
+    
     int search_result;
+    
+    printf("About to search for the number 6...\n");
+    search_result = search_for_int(&test, 6);
+    printf("The search_result is: %d\n", search_result);
+    
+    printf("About to search for the number 4...\n");
+    search_result = search_for_int(&test, 4);
+    printf("The search_result is: %d\n", search_result);
+    
+    printf("About to search for the number 2...\n");
+    search_result = search_for_int(&test, 2);
+    printf("The search_result is: %d\n", search_result);
+    
+    
+    printf("About to search for the number 7...\n");
+    search_result = search_for_int(&test, 7);
+    printf("The search_result is: %d\n", search_result);
+    
+    printf("About to search for the number 5...\n");
+    search_result = search_for_int(&test, 5);
+    printf("The search_result is: %d\n", search_result);
+    
+    printf("About to search for the number 3...\n");
+    search_result = search_for_int(&test, 3);
+    printf("The search_result is: %d\n", search_result);
+    
+    printf("About to search for the number 1...\n");
+    search_result = search_for_int(&test, 1);
+    printf("The search_result is: %d\n", search_result);
+}
 
+void test_pathological0() {
+    printf("About to sort the empty array: []\n");
+    
+    int a[] = { };
+    int n = 0;
+    struct integer ** test_integers = make_integer_structures(a, n);
+    struct sortable test = {
+        (void **) test_integers,
+        n,
+        &compare_integers
+    };
+    
+    printf("About to sort test_integers:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    printf("About to call the quicksort function\n");
+    quicksort(&test);
+    printf("After sorting the integers, they look like:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    
+    int search_result;
+    
+    printf("About to search for the number 6...\n");
+    search_result = search_for_int(&test, 6);
+    printf("The search_result is: %d\n", search_result);
+}
+
+void test_pathological1() {
+    printf("About to sort the singleton array: [ 10 ]\n");
+    
+    int a[] = { 10 };
+    int n = 1;
+    struct integer ** test_integers = make_integer_structures(a, n);
+    struct sortable test = {
+        (void **) test_integers,
+        n,
+        &compare_integers
+    };
+    
+    printf("About to sort test_integers:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    printf("About to call the quicksort function\n");
+    quicksort(&test);
+    printf("After sorting the integers, they look like:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    
+    int search_result;
+    
     printf("About to search for the number 6...\n");
     search_result = search_for_int(&test, 6);
     printf("The search_result is: %d\n", search_result);
 
-    printf("About to search for the number 4...\n");
-    search_result = search_for_int(&test, 4);
+    printf("About to search for the number 10...\n");
+    search_result = search_for_int(&test, 10);
     printf("The search_result is: %d\n", search_result);
 
-    printf("About to search for the number 2...\n");
-    search_result = search_for_int(&test, 2);
+    printf("About to search for the number 12...\n");
+    search_result = search_for_int(&test, 12);
     printf("The search_result is: %d\n", search_result);
+}
 
-
-    printf("About to search for the number 7...\n");
-    search_result = search_for_int(&test, 7);
-    printf("The search_result is: %d\n", search_result);
-
-    printf("About to search for the number 5...\n");
-    search_result = search_for_int(&test, 5);
-    printf("The search_result is: %d\n", search_result);
-
-    printf("About to search for the number 3...\n");
-    search_result = search_for_int(&test, 3);
-    printf("The search_result is: %d\n", search_result);
-
-    printf("About to search for the number 1...\n");
-    search_result = search_for_int(&test, 1);
-    printf("The search_result is: %d\n", search_result);
+int main() {
+    test_obvious();
+    //    test_pathological0();
+    test_pathological1();
 }

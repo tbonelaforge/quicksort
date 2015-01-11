@@ -9,7 +9,7 @@ int binary_search(struct sortable * self, int begin, int end, void * target) {
     int m;
     int comparison;
 
-    if (begin == end - 1) {
+    if (begin >= end - 1) {
         return determine_final_index(self, begin, end, target);
     }
     m = pick_midpoint(begin, end);
