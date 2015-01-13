@@ -8,12 +8,13 @@ struct integer {
     int value;
 };
 
+
 int search_for_int(struct sortable * self, int t) {
     int begin = 0;
     int end = self->how_many_elements - 1;
     struct integer target = { t };
 
-    return binary_search(self, begin, end, &target);
+    return binary_search(self, &target);
 }
 
 int compare_integers(void * a, void * b) {
@@ -174,8 +175,52 @@ void test_pathological1() {
     printf("The search_result is: %d\n", search_result);
 }
 
+void debugging_function(void * element) {
+    struct integer * elem = element;
+    print_integer(elem);
+}
+
+void test_pathological28() {
+    printf("About to sort an array of 28 zeros\n");
+    
+    int a[] = { 
+        0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
+        10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+        20, 21, 22, 23, 24, 25, 26, 27
+    };
+    int n = 28;
+    struct integer ** test_integers = make_integer_structures(a, n);
+    struct sortable test = {
+        (void **) test_integers,
+        n,
+        &compare_integers
+    };
+    
+    printf("About to sort test_integers:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    printf("About to call the quicksort function\n");
+    quicksort(&test);
+    printf("After sorting the integers, they look like:\n");
+    print_as_integers(test.elements, test.how_many_elements);
+    
+    int search_result;
+    
+    printf("About to search for the number 6...\n");
+    search_result = search_for_int(&test, 6);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 10...\n");
+    search_result = search_for_int(&test, 10);
+    printf("The search_result is: %d\n", search_result);
+
+    printf("About to search for the number 12...\n");
+    search_result = search_for_int(&test, 12);
+    printf("The search_result is: %d\n", search_result);
+}
+
 int main() {
     test_obvious();
-    //    test_pathological0();
+    test_pathological0();
     test_pathological1();
+    test_pathological28();
 }

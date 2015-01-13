@@ -3,6 +3,8 @@
 
 typedef int (*ptr2comparator)(void *, void *);
 
+typedef void (*ptr2printer)(void *);
+
 struct sortable {
     void ** elements;
     int how_many_elements;

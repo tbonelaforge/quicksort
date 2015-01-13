@@ -2,6 +2,7 @@
 
 #include "quicksort.h"
 #include "sort_util.h"
+#include "sortable.h"
 
 void quicksort(struct sortable * self) {
     int i = 0;
@@ -27,9 +28,10 @@ struct partition fat_partition(struct sortable * self, int i, int j, int p) {
     struct partition part;
     int k = i;
     int comparison;
+    void * pivot_element = self->elements[p];
 
     while (k <= j) {
-        comparison = (*self->comp)(self->elements[k], self->elements[p]);
+        comparison = (*self->comp)(self->elements[k], pivot_element);
         if (comparison < 0) {
             swap(self, k, i);
             i += 1;

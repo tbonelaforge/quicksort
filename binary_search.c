@@ -5,7 +5,14 @@
 
 /* Return greatest index i such that value(i) <= target,
    Or -1, if value(i) > target for all i */
-int binary_search(struct sortable * self, int begin, int end, void * target) {
+int binary_search(struct sortable * self, void * target) {
+    if (self->how_many_elements <= 0) {
+        return -1;
+    }
+    return binary_search_slice(self, 0, self->how_many_elements - 1, target);
+}
+
+int binary_search_slice(struct sortable * self, int begin, int end, void * target) {
     int m;
     int comparison;
 
@@ -15,9 +22,9 @@ int binary_search(struct sortable * self, int begin, int end, void * target) {
     m = pick_midpoint(begin, end);
     comparison = (*self->comp)(self->elements[m], target);
     if (comparison <= 0) {
-        return binary_search(self, m, end, target);
+        return binary_search_slice(self, m, end, target);
     } else { // comparison >= 0
-        return binary_search(self, begin, m, target);
+        return binary_search_slice(self, begin, m, target);
     }
 }
 

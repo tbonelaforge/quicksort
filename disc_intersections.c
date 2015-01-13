@@ -61,7 +61,7 @@ int count_intersections_at_i(struct sortable sorted_discs, int i) {
         disc_i->right,
         disc_i->right
     };
-    int j = binary_search(&sorted_discs, 0, sorted_discs.how_many_elements - 1, &target);
+    int j = binary_search(&sorted_discs, &target);
 
     return max(j - i, 0);
 }
